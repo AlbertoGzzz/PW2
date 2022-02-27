@@ -6,27 +6,34 @@ app.get('/',(req, res) => {
     res.send('Hola first endpoint')
 });
 
+
+// Get all users
 app.get('/users',(req, res) => {
     res.json([
         {
             user: 'Quintero',
-            id: '1',
             password: 'Test123',
         },
         {
             user: 'Alberto',
-            id: '2',
             password: 'pass123',
         },
         {
             user: 'Alex',
-            id: '3',
             password: 'alex321',
         }
     ]);
 });
 
-app.get('/users/:id')
+// get users by id
+app.get('/users/:id', function (req, res) {
+    const { id } = req.params;
+    res.json({
+        id: id,
+        user: 'Quintero',
+        password: 'Test123',
+    });
+});
 
 app.listen(port, () => {
     console.log('el puerto es:' + port);
