@@ -2,6 +2,8 @@ const express = require('express');
 const faker = require('faker');
 const router = express.Router();
 
+//esta es una prueba
+
 router.get('/', (req, res) => {
     console.log(req);
 
@@ -13,7 +15,7 @@ router.get('/', (req, res) => {
            name: faker.commerce.productName(),
            price: faker.commerce.price(),
            image: faker.image.imageUrl()
-       })  
+       })
     }
     res.json({
        'success': true,
@@ -45,7 +47,7 @@ router.get('/:id', (req, res) => {
             'Data':  {}
         })
     }
-    
+
 });
 
 module.exports = router;
