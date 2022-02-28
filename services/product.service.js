@@ -23,6 +23,7 @@ class ProductService
 
       }
     }
+
     find(size)
     {
       const products = this.products.filter(( item, index) => item && index < size);

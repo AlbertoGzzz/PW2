@@ -11,7 +11,6 @@ app.get('/',(req, res) => {
 
 app.use(logErrors);
 app.use(boomErrorHandler);
-app.use(errorHandler);
 
 app.use(express.json());
 routerApi(app);

@@ -9,7 +9,7 @@ const router = express.Router();
 router.get('/', (req, res, next) => {
 try {
   const { size } = req.query;
-  const products = new service.find(size || 10)
+  const products = service.find(size || 10)
 
   res.json({
      'success': true,
@@ -30,7 +30,7 @@ router.post('/', (req, res) => {
   res.json({
      'success': true,
      'message': "El producto se ha creado con exito",
-     'Data': product,
+     'Data': product
  });
 });
 
@@ -44,7 +44,7 @@ router.get('/:id', (req, res, next) => {
   const product = service.findOne(id);
 
       res.json({
-          'success': false,
+          'success': true,
           'message': 'ID tiene que ser entero',
           'Data':  product
       });

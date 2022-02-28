@@ -2,9 +2,9 @@ const express = require('express');
 const usersRouter  = require('./users.router');
 
 
-function routerApi(app) {
+const routerApi=(app) => {
     const router=express.Router();
-    app.use('/users', router);
+    app.use('/api/v1', router);
 
     router.use('/users', usersRouter);
 }
