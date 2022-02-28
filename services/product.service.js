@@ -53,7 +53,20 @@ class ProductService
     }
     update()
     {
-
+      const index = this.products.findIndex(item => item.id === id)
+      console.log('Este es mi index' + index);
+      if(index === -1){
+        throw boom.notFound('El producto no fue encontrado');
+      }
+      var currentProduct = this.products[index];
+      this.products[index]={
+        ...currentProduct,
+        ...changes
+      };
+      return{
+        old: currentProduct,
+        changed: this.products[index]
+      }
     }
     delete(id)
     {

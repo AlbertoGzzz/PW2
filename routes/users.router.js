@@ -2,6 +2,10 @@ const express = require('express');
 const faker = require('faker');
 const ProductService = require('../services/product.service');
 const service = new ProductService();
+
+const validatorHandler= require('./../middlewares/validator.handler');
+const { createProductDto, updateProductDto, getProductDto } = require('../dtos/users.dto');
+
 const router = express.Router();
 
 
@@ -23,7 +27,7 @@ try {
 
 
 //CREAR
-router.post('/', (req, res) => {
+router.post('/', validatorHandler(createProductDto, 'body'),(req, res) => {
   const body = req.body;
   const product= service.create(body);
 
@@ -38,7 +42,7 @@ router.post('/', (req, res) => {
 
 
 //BUSCAR POR ID
-router.get('/:id', (req, res, next) => {
+router.get('/:id', validatorHandler(getProductDto, 'params'), (req, res, next) => {
  try {
   const { id } = req.params;
   const product = service.findOne(id);
@@ -57,7 +61,7 @@ router.get('/:id', (req, res, next) => {
 
 
 
-router.delete('/:id', (req, res, next) => {
+router.delete('/:id',validatorHandler(getProductDto, 'params'), (req, res, next) => {
   try {
    const { id } = req.params;
    console.log('Este es mi id' + id)
@@ -67,6 +71,27 @@ router.delete('/:id', (req, res, next) => {
            'success': true,
            'message': 'El siguiente registro se ha eliminado correctamente',
            'Data':  product
+       });
+  } catch (error) {
+    next(error);
+  }
+
+ });
+
+
+ router.patch('/:id', validatorHandler(getProductDto, 'params'), validatorHandler(updateProductDto, 'body'), (req, res, next) => {
+  try {
+   const { id } = req.params;
+   const body = req.body;
+  const  { old, changed }= service.update(id, body);
+
+       res.json({
+           'success': true,
+           'message': 'Se ha actualizado con exito',
+           'Data': {
+             "Original":old,
+             "Modificado": changed
+           }
        });
   } catch (error) {
     next(error);
