@@ -51,10 +51,9 @@ class ProductService
        throw boom.notFound('El producto no fue encontrado');
       return product;
     }
-    update()
+    update(id, changes)
     {
       const index = this.products.findIndex(item => item.id === id)
-      console.log('Este es mi index' + index);
       if(index === -1){
         throw boom.notFound('El producto no fue encontrado');
       }
