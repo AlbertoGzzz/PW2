@@ -1,6 +1,10 @@
 const express = require('express');
+const db = require('./db')
+const { DBCONNECTION }= require('./consts.json')
 const routerApi = require('./routes/index');
 const { logErrors, boomErrorHandler, errorHandler } =require('./middlewares/error.handler')
+require('dotenv').config({ path: 'ENV_FILENAME' });
+db(DBCONNECTION);
 
 const app = express();
 const port = 3000;

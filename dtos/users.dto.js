@@ -1,6 +1,6 @@
 const Joi =require('joi');
 
-const id= Joi.string().uuid();
+const id= Joi.string();
 const name= Joi.string().alphanum().min(3).max(15);
 const age= Joi.number().integer();
 

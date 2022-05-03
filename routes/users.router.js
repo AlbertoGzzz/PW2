@@ -10,10 +10,11 @@ const router = express.Router();
 
 
 //BUSCAR
-router.get('/', (req, res, next) => {
+router.get('/', async (req, res, next) => {
 try {
   const { size } = req.query;
-  const products = service.find(size || 10)
+  const filter = req.body;
+  const products = await service.findDB(size || 10, filter);
 
   res.json({
      'success': true,
@@ -27,13 +28,13 @@ try {
 
 
 //CREAR
-router.post('/', validatorHandler(createProductDto, 'body'),(req, res) => {
+router.post('/', validatorHandler(createProductDto, 'body'), async (req, res) => {
   const body = req.body;
-  const product= service.create(body);
+  const product= await service.createDB(body);
 
   res.json({
      'success': true,
-     'message': "El producto se ha creado con exito",
+     'message': "El usuario se ha creado con exito",
      'Data': product
  });
 });
@@ -42,10 +43,10 @@ router.post('/', validatorHandler(createProductDto, 'body'),(req, res) => {
 
 
 //BUSCAR POR ID
-router.get('/:id', validatorHandler(getProductDto, 'params'), (req, res, next) => {
+router.get('/:id', validatorHandler(getProductDto, 'params'), async (req, res, next) => {
  try {
   const { id } = req.params;
-  const product = service.findOne(id);
+  const product = await service.findOneDB(id);
 
       res.json({
           'success': true,
@@ -61,11 +62,11 @@ router.get('/:id', validatorHandler(getProductDto, 'params'), (req, res, next) =
 
 
 
-router.delete('/:id',validatorHandler(getProductDto, 'params'), (req, res, next) => {
+router.delete('/:id',validatorHandler(getProductDto, 'params'), async (req, res, next) => {
   try {
    const { id } = req.params;
    console.log('Este es mi id' + id)
-   const product = service.delete(id);
+   const product = await service.deleteDB(id);
 
        res.json({
            'success': true,
@@ -79,11 +80,11 @@ router.delete('/:id',validatorHandler(getProductDto, 'params'), (req, res, next)
  });
 
 
- router.patch('/:id', validatorHandler(getProductDto, 'params'), validatorHandler(updateProductDto, 'body'), (req, res, next) => {
+ router.patch('/:id', validatorHandler(getProductDto, 'params'), validatorHandler(updateProductDto, 'body'), async (req, res, next) => {
   try {
    const { id } = req.params;
    const body = req.body;
-  const  { old, changed }= service.update(id, body);
+  const  { old, changed }= await service.updateDB(id, body);
 
        res.json({
            'success': true,

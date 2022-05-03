@@ -2,6 +2,14 @@ const faker = require('faker');
 
 const boom= require('@hapi/boom');
 
+const ProductModel = require('../models/product.model');
+
+const UserModel = require('../models/user.model');
+
+const NOTFOUNDCATALOG = 'No se encontró el catalago'
+
+const NOTFOUNDROWS = 'No hay productos registrados aun'
+
 class ProductService
 {
   constructor()
@@ -24,6 +32,10 @@ class ProductService
       }
     }
 
+
+
+
+
     find(size)
     {
       const products = this.products.filter(( item, index) => item && index < size);
@@ -34,6 +46,10 @@ class ProductService
       }
       return products;
     }
+
+
+
+
     create(data)
     {
       const newProduct = {
@@ -43,6 +59,8 @@ class ProductService
       this.products.push(newProduct);
       return newProduct
     }
+
+
 
     findOne(id)
     {
@@ -78,5 +96,88 @@ class ProductService
       this.products.splice(index, 1);
       return currentProduct;
     }
+
+
+
+
+    //DBS
+
+    async findDB(limit, filter){
+      let productsDB = await ProductModel.find(filter);
+      productsDB = limit ? productsDB.filter(( item, index) => item && index < limit) : productsDB;
+      if(!productsDB){
+        throw boom.notFound(NOTFOUNDCATALOG);
+      }else if(productsDB.length < 0){
+        throw boom.notFound(NOTFOUNDROWS);
+      }
+      return productsDB;
+    }
+
+
+    async findOneDB(id)
+    {
+      const product = await ProductModel.findOne({
+        _id: id
+      });
+      if(product==undefined || product==null)
+       throw boom.notFound('No se encontró catalago');
+       else if(product.length<=0)
+       throw boom.notFound('No se encontró ningun registro');
+      return product;
+    }
+
+
+    async createDB(data)
+    {
+      const model = new ProductModel(data);
+      await model.save();
+      return data;
+    }
+
+
+  /*  async createDB(data)
+    {
+      const model = new UserModel(data);
+      await model.save();
+      return data;
+    }
+*/
+
+    async updateDB(id, changes)
+    {
+      let product= await ProductModel.findOne({
+        _id: id
+      });
+      let productOriginal= {
+        name: product.Name,
+        age: product.age
+      };
+      const {name, age} = changes;
+      product.name=name;
+      product.age=age;
+      product.save();
+      return{
+         original: productOriginal,
+         acualizado: product
+      }
+    }
+
+
+
+
+    async deleteDB(id)
+    {
+      let product= await ProductModel.findOne({
+        _id: id
+      });
+
+      const { deletedCount } = await ProductModel.deleteOne({
+        _id: id
+      });
+     if(deletedCount <= 0)
+       throw boom.notFound('El registro seleccionado no existe');
+      return product;
+    }
+
 }
 module.exports= ProductService;
