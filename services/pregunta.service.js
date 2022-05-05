@@ -8,7 +8,7 @@ const PreguntaModel = require('../models/pregunta.model');
 
 const NOTFOUNDCATALOG = 'No se encontró el catalago'
 
-const NOTFOUNDROWS = 'No hay productos registrados aun'
+const NOTFOUNDROWS = 'No hay preguntas registrados aun'
 
 class PreguntaService
 {
@@ -35,67 +35,6 @@ class PreguntaService
 
 
 
-
-    find(size)
-    {
-      const products = this.products.filter(( item, index) => item && index < size);
-      if(!products){
-        throw boom.notFound('No se encontro el catálogo');
-      }else if(products.length < 0){
-        throw boom.notFound('No hay productos registrados aun');
-      }
-      return products;
-    }
-
-
-
-
-    create(data)
-    {
-      const newProduct = {
-        id: faker.datatype.uuid(),
-        ...data
-      }
-      this.products.push(newProduct);
-      return newProduct
-    }
-
-
-
-    findOne(id)
-    {
-      const product = this.products.find((item) => item.id === id)
-      if(!product)
-       throw boom.notFound('El producto no fue encontrado');
-      return product;
-    }
-    update(id, changes)
-    {
-      const index = this.products.findIndex(item => item.id === id)
-      if(index === -1){
-        throw boom.notFound('El producto no fue encontrado');
-      }
-      var currentProduct = this.products[index];
-      this.products[index]={
-        ...currentProduct,
-        ...changes
-      };
-      return{
-        old: currentProduct,
-        changed: this.products[index]
-      }
-    }
-    delete(id)
-    {
-      const index = this.products.findIndex(item => item.id === id)
-      console.log('Este es mi index' + index);
-      if(index === -1){
-        throw boom.notFound('El producto no fue encontrado');
-      }
-      var currentProduct = this.products[index];
-      this.products.splice(index, 1);
-      return currentProduct;
-    }
 
 
 
