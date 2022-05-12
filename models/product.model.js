@@ -1,10 +1,12 @@
+const { string } = require('joi')
 const mongoose = require('mongoose')
 
 const Schema = mongoose.Schema
 
 const productSchema = new Schema({
   name:  String,
-  age: String
+  email: String,
+  password: String
 })
 
 
