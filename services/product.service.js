@@ -4,7 +4,6 @@ const boom= require('@hapi/boom');
 
 const ProductModel = require('../models/product.model');
 
-const UserModel = require('../models/user.model');
 
 const NOTFOUNDCATALOG = 'No se encontró el catalago'
 
@@ -150,11 +149,13 @@ class ProductService
       });
       let productOriginal= {
         name: product.Name,
-        age: product.age
+        email: product.email,
+        password: product.password
       };
-      const {name, age} = changes;
+      const {name, email, password} = changes;
       product.name=name;
-      product.age=age;
+      product.email=email;
+      product.password=password;
       product.save();
       return{
          original: productOriginal,
