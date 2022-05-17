@@ -4,7 +4,7 @@ const PreguntaService = require('../services/pregunta.service');
 const service = new PreguntaService();
 
 const validatorHandler= require('./../middlewares/validator.handler');
-const { createPreguntaDto, updatePreguntaDto, getPreguntaDto } = require('../dtos/pregunta.dto');
+const { createPreguntaDto, updatePreguntaDto, getPreguntaDto, getPreguntaDto2 } = require('../dtos/pregunta.dto');
 
 const router = express.Router();
 
@@ -40,7 +40,22 @@ router.post('/', validatorHandler(createPreguntaDto, 'body'), async (req, res) =
 });
 
 
+//BUSCAR POR USER
+  router.get('/usuario/:usuario', async (req, res, next) => {
+    try {
+      const { size } = req.query;
+      const filter = req.body;
+      const pregunta = await service.findUserDB(size || 10, filter);
 
+      res.json({
+         'success': true,
+         'message': "No se que onda",
+         'Data': pregunta,
+     });
+    } catch (error) {
+      next(error);
+    }
+    });
 
 //BUSCAR POR ID
 router.get('/:id', validatorHandler(getPreguntaDto, 'params'), async (req, res, next) => {

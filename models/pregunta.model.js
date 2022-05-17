@@ -4,7 +4,8 @@ const Schema = mongoose.Schema
 
 const preguntaSchema = new Schema({
   texto:  String,
-  descripcion: String
+  descripcion: String,
+  usuario: String
 })
 
 

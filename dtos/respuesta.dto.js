@@ -2,14 +2,20 @@ const Joi =require('joi');
 
 const id= Joi.string();
 const texto= Joi.string();
+const usuario= Joi.string();
+const pregunta= Joi.string();
 
 const createRespuestaDto = Joi.object({
-    texto: texto.required()
+    texto: texto.required(),
+    usuario: usuario.required(),
+    pregunta:pregunta.required(),
 });
 
 
 const updateRespuestaDto = Joi.object({
-  texto: texto
+  texto: texto,
+  usuario: usuario,
+  pregunta: pregunta,
 });
 
 const getRespuestaDto = Joi.object({

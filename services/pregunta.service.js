@@ -65,6 +65,18 @@ class PreguntaService
       return pregunta;
     }
 
+  //ESTE ES EL QUE ESTOY USANDO PARA BUSCAR POR USUARIO PERO NO FUNCIONA
+    async findUserDB(limit, filter){
+      let preguntasDB = await PreguntaModel.find(filter);
+      preguntasDB = limit ? preguntasDB.filter(( item, index) => item && index < limit) : preguntasDB;
+      if(!preguntasDB){
+        throw boom.notFound(NOTFOUNDCATALOG);
+      }else if(preguntasDB.length < 0){
+        throw boom.notFound(NOTFOUNDROWS);
+      }
+      return preguntasDB;
+    }
+
 
     async createDB(data)
     {
@@ -88,8 +100,8 @@ class PreguntaService
         _id: id
       });
       let preguntaOriginal= {
-        texto: pregunta.Name,
-        descripcion: pregunta.age
+        texto: pregunta.texto,
+        descripcion: pregunta.descripcion
       };
       const {texto, descripcion} = changes;
       pregunta.texto=texto;

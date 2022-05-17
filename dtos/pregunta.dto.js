@@ -3,20 +3,27 @@ const Joi =require('joi');
 const id= Joi.string();
 const texto= Joi.string();
 const descripcion= Joi.string();
+const usuario= Joi.string();
 
 const createPreguntaDto = Joi.object({
     texto: texto.required(),
     descripcion: descripcion.required(),
+    usuario: usuario.required(),
 });
 
 
 const updatePreguntaDto = Joi.object({
   texto: texto,
   descripcion: descripcion,
+  usuario: usuario,
 });
 
 const getPreguntaDto = Joi.object({
-  id: id.required()
+  id: id.required(),
 });
 
-module.exports= { createPreguntaDto, updatePreguntaDto, getPreguntaDto };
+const getPreguntaDto2 = Joi.object({
+  usuario: usuario.required(),
+});
+
+module.exports= { createPreguntaDto, updatePreguntaDto, getPreguntaDto, getPreguntaDto2 };

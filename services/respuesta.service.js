@@ -51,6 +51,7 @@ class RespuestaService
     }
 
 
+
     async findOneDB(id)
     {
       const respuesta = await RespuestaModel.findOne({
@@ -86,12 +87,11 @@ class RespuestaService
         _id: id
       });
       let respuestaOriginal= {
-        texto: respuesta.Name,
-        descripcion: respuesta.age
+        texto: respuesta.texto,
+
       };
-      const {texto, descripcion} = changes;
+      const {texto} = changes;
       respuesta.texto=texto;
-      respuesta.descripcion=descripcion;
       respuesta.save();
       return{
          original: respuestaOriginal,
