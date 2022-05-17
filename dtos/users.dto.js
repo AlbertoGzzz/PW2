@@ -24,4 +24,9 @@ const getProductDto = Joi.object({
   id: id.required()
 });
 
-module.exports= { createProductDto, updateProductDto, getProductDto };
+const getProductDto2 = Joi.object({
+  name: name.required(),
+  password:password.required()
+});
+
+module.exports= { createProductDto, updateProductDto, getProductDto, getProductDto2 };

@@ -3,6 +3,8 @@ const faker = require('faker');
 const boom= require('@hapi/boom');
 
 const ProductModel = require('../models/product.model');
+const bcrypt = require('bcryptjs/dist/bcrypt');
+const product = require('../models/product.model');
 
 
 const NOTFOUNDCATALOG = 'No se encontró el catalago'
@@ -178,6 +180,19 @@ class ProductService
      if(deletedCount <= 0)
        throw boom.notFound('El registro seleccionado no existe');
       return product;
+    }
+
+
+    async loginDB(filter)
+    {
+      let productsDB = await ProductModel.find({name: filter.name});
+      productsDB = limit ? productsDB.filter(( item, index) => item && index < limit) : productsDB;
+      if(!productsDB){
+        throw boom.notFound(NOTFOUNDCATALOG);
+      }else if(productsDB.length < 0){
+        throw boom.notFound(NOTFOUNDROWS);
+      }
+      return productsDB;
     }
 
 }

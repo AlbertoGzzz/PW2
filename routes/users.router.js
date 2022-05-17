@@ -4,7 +4,7 @@ const ProductService = require('../services/product.service');
 const service = new ProductService();
 
 const validatorHandler= require('./../middlewares/validator.handler');
-const { createProductDto, updateProductDto, getProductDto } = require('../dtos/users.dto');
+const { createProductDto, updateProductDto, getProductDto, getProductDto2 } = require('../dtos/users.dto');
 
 const router = express.Router();
 
@@ -59,7 +59,41 @@ router.get('/:id', validatorHandler(getProductDto, 'params'), async (req, res, n
 
 });
 
+/*
+router.get('/login', validatorHandler(getProductDto2, 'params'), async (req, res, next) => {
+  try {
+   const { name, password } = req.params;
+   const product = await service.loginDB(name, password);
 
+       res.json({
+           'success': true,
+           'message': 'Pasele mijo',
+           'Data':  product
+       });
+  } catch (error) {
+    next(error);
+  }
+
+ });
+
+*/
+
+
+ router.get('/login', async (req, res, next) => {
+  try {
+    const { size } = req.query;
+    const filter = req.body;
+    const products = await service.loginDB(size || 10, filter);
+
+    res.json({
+       'success': true,
+       'message': "PASALE",
+       'Data': products,
+   });
+  } catch (error) {
+    next(error);
+  }
+  });
 
 
 router.delete('/:id',validatorHandler(getProductDto, 'params'), async (req, res, next) => {

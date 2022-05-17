@@ -49,7 +49,7 @@ router.post('/', validatorHandler(createPreguntaDto, 'body'), async (req, res) =
 
       res.json({
          'success': true,
-         'message': "No se que onda",
+         'message': "Estas son las preguntas hechas por el usuario",
          'Data': pregunta,
      });
     } catch (error) {

@@ -4,7 +4,7 @@ const RespuestaService = require('../services/respuesta.service');
 const service = new RespuestaService();
 
 const validatorHandler= require('./../middlewares/validator.handler');
-const { createRespuestaDto, updateRespuestaDto, getRespuestaDto } = require('../dtos/respuesta.dto');
+const { createRespuestaDto, updateRespuestaDto, getRespuestaDto, getRespuestaDto2 } = require('../dtos/respuesta.dto');
 
 const router = express.Router();
 
@@ -59,6 +59,24 @@ router.get('/:id', validatorHandler(getRespuestaDto, 'params'), async (req, res,
 
 });
 
+//BUSCAR POR ID DE PREGUNTA
+
+//BUSCAR
+router.get('/', async (req, res, next) => {
+  try {
+    const { size } = req.query;
+    const filter = req.body;
+    const respuesta = await service.findResponseDB(size || 10, filter);
+
+    res.json({
+       'success': true,
+       'message': "XD No se porque funciono",
+       'Data': respuesta
+   });
+  } catch (error) {
+    next(error);
+  }
+  });
 
 
 

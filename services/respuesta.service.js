@@ -35,8 +35,6 @@ class RespuestaService
 
 
 
-
-
     //DBS
 
     async findDB(limit, filter){
@@ -50,6 +48,18 @@ class RespuestaService
       return respuestasDB;
     }
 
+ //ESTE ES EL QUE ESTOY USANDO PARA BUSCAR POR USUARIO PERO NO FUNCIONA
+    async findResponseDB(limit, filter){
+      let respuestasDB = await RespuestaModel.find({pregunta: filter.pregunta});
+
+      respuestasDB = limit ? respuestasDB.filter(( item, index) => item && index < limit) : respuestasDB;
+      if(!respuestasDB){
+        throw boom.notFound(NOTFOUNDCATALOG);
+      }else if(respuestasDB.length < 0){
+        throw boom.notFound(NOTFOUNDROWS);
+      }
+      return respuestasDB;
+    }
 
 
     async findOneDB(id)

@@ -22,4 +22,8 @@ const getRespuestaDto = Joi.object({
   id: id.required()
 });
 
-module.exports= { createRespuestaDto, updateRespuestaDto, getRespuestaDto };
+const getRespuestaDto2 = Joi.object({
+  pregunta: pregunta.required()
+});
+
+module.exports= { createRespuestaDto, updateRespuestaDto, getRespuestaDto, getRespuestaDto2 };
