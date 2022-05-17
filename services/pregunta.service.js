@@ -67,7 +67,8 @@ class PreguntaService
 
   //ESTE ES EL QUE ESTOY USANDO PARA BUSCAR POR USUARIO PERO NO FUNCIONA
     async findUserDB(limit, filter){
-      let preguntasDB = await PreguntaModel.find(filter);
+      let preguntasDB = await PreguntaModel.find({usuario: filter.usuario});
+
       preguntasDB = limit ? preguntasDB.filter(( item, index) => item && index < limit) : preguntasDB;
       if(!preguntasDB){
         throw boom.notFound(NOTFOUNDCATALOG);

@@ -41,7 +41,7 @@ router.post('/', validatorHandler(createPreguntaDto, 'body'), async (req, res) =
 
 
 //BUSCAR POR USER
-  router.get('/usuario/:usuario', async (req, res, next) => {
+  router.get('/usuario', async (req, res, next) => {
     try {
       const { size } = req.query;
       const filter = req.body;
@@ -56,6 +56,25 @@ router.post('/', validatorHandler(createPreguntaDto, 'body'), async (req, res) =
       next(error);
     }
     });
+
+
+    /*
+
+    router.get('/usuario/:usuario', validatorHandler(getPreguntaDto2, 'params'), async (req, res, next) => {
+      try {
+       const { usuario } = req.params;
+       const pregunta = await service.findUserDB(usuario);
+
+           res.json({
+               'success': true,
+               'message': 'ID tiene que ser entero',
+               'Data':  pregunta
+           });
+      } catch (error) {
+        next(error);
+      }
+
+     });*/
 
 //BUSCAR POR ID
 router.get('/:id', validatorHandler(getPreguntaDto, 'params'), async (req, res, next) => {
