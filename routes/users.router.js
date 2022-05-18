@@ -16,11 +16,21 @@ try {
   const filter = req.body;
   const products = await service.findDB(size || 10, filter);
 
+  if (products==0){
+
   res.json({
-     'success': true,
-     'message': "Estos son los productos encontrados",
-     'Data': products,
+     'success': false,
+     'message': "No hay ningun papu"
  });
+
+    }else{
+      res.json({
+        'success': true,
+        'message': "Estos son los productos encontrados",
+        'Data': products,
+    });
+    }
+
 } catch (error) {
   next(error);
 }
@@ -30,6 +40,10 @@ try {
 //CREAR
 router.post('/', validatorHandler(createProductDto, 'body'), async (req, res) => {
   const body = req.body;
+
+
+
+
   const product= await service.createDB(body);
 
   res.json({
