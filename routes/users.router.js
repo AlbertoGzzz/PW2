@@ -13,7 +13,7 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
 try {
   const { size } = req.query;
-  const filter = req.body.name;
+  const filter = req.body;
   const products = await service.findDB(size || 10, filter);
 
   if (products==0){
@@ -35,6 +35,35 @@ try {
   next(error);
 }
 });
+
+
+router.post('/log', async (req, res, next) => {
+  try {
+    const { size } = req.query;
+    const filter = req.body;
+    const products = await service.findDB(size || 10, filter);
+
+    if (products==0){
+
+    res.json({
+       'success': false,
+       'message': "No hay ningun papu"
+   });
+
+      }else{
+        res.json({
+          'success': true,
+          'message': "Estos son los productos encontrados",
+          'Data': products,
+      });
+      }
+
+  } catch (error) {
+    next(error);
+  }
+  });
+
+
 
 
 //CREAR
