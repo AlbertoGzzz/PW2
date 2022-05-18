@@ -13,7 +13,7 @@ const router = express.Router();
 router.get('/', async (req, res, next) => {
 try {
   const { size } = req.query;
-  const filter = req.body;
+  const filter = req.body.name;
   const products = await service.findDB(size || 10, filter);
 
   if (products==0){
@@ -39,18 +39,30 @@ try {
 
 //CREAR
 router.post('/', validatorHandler(createProductDto, 'body'), async (req, res) => {
+
+  const { size } = req.query;
+  const filter = req.body;
+  const products = await service.findDB(size || 10, {name: filter.name});
   const body = req.body;
 
 
+  if (products==0){
 
-
-  const product= await service.createDB(body);
-
+    const product= await service.createDB(body);
   res.json({
      'success': true,
      'message': "El usuario se ha creado con exito",
      'Data': product
  });
+  }else{
+    res.json({
+      'success': false,
+      'message': "Ya existe ese usuario, intente con uno nuevo"
+  });
+  }
+
+
+
 });
 
 

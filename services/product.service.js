@@ -130,9 +130,14 @@ class ProductService
 
     async createDB(data)
     {
+     // let product= await ProductModel.find({name: filter.name});
+     // if(product==undefined || product==null || product>0){
       const model = new ProductModel(data);
       await model.save();
       return data;
+     // }else{
+       // throw boom.notFound('Ya hay alguien registrado asi');
+      //}
     }
 
 
