@@ -4,7 +4,7 @@ const id= Joi.string();
 const texto= Joi.string();
 const descripcion= Joi.string();
 const usuario= Joi.string();
-const daysAgo= Joi.date();
+const daysAgo= Joi.string();
 
 const createPreguntaDto = Joi.object({
     texto: texto.required(),

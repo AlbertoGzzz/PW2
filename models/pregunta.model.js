@@ -6,7 +6,7 @@ const preguntaSchema = new Schema({
   texto:  String,
   descripcion: String,
   usuario: String,
-  daysAgo: Date,
+  daysAgo: String,
 })
 
 
