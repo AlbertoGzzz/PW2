@@ -85,10 +85,10 @@ class PreguntaService
       //var query =({"texto": new RegExp(filter)}).stream();
       // let preguntasDB = await PreguntaModel.find({texto: {$regex: /Que/}});
 
-       let preguntasDB = await PreguntaModel.find({texto: filter.texto});
+       let preguntasDB = await PreguntaModel.find({texto: {$regex: `.*${filter.texto}.*`}});
      // {texto: {$regex: /filter/}}
 
-      preguntasDB = limit ? preguntasDB.filter(( item, index) => item && index < limit) : preguntasDB;
+
       if(!preguntasDB){
         throw boom.notFound(NOTFOUNDCATALOG);
       }else if(preguntasDB.length < 0){
