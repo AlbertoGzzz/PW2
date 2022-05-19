@@ -78,6 +78,25 @@ class PreguntaService
       return preguntasDB;
     }
 
+    async findTextDB(limit, filter){
+
+     // var query = {texto: {$regex: +'/'+filter+'/'}}
+
+      var query ={texto: new RegExp('^' +filter + '$', 'i')}
+      let preguntasDB = await PreguntaModel.find({texto: {$regex: /Que/}});
+
+
+     // {texto: {$regex: /filter/}}
+
+      preguntasDB = limit ? preguntasDB.filter(( item, index) => item && index < limit) : preguntasDB;
+      if(!preguntasDB){
+        throw boom.notFound(NOTFOUNDCATALOG);
+      }else if(preguntasDB.length < 0){
+        throw boom.notFound(NOTFOUNDROWS);
+      }
+      return preguntasDB;
+    }
+
 
     async createDB(data)
     {

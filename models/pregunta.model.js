@@ -5,7 +5,8 @@ const Schema = mongoose.Schema
 const preguntaSchema = new Schema({
   texto:  String,
   descripcion: String,
-  usuario: String
+  usuario: String,
+  daysAgo: Date,
 })
 
 

@@ -29,7 +29,9 @@ try {
 
 //CREAR
 router.post('/', validatorHandler(createPreguntaDto, 'body'), async (req, res) => {
-  const body = req.body;
+
+  const body = req.body;;
+  body.daysAgo = new Date().toDateString();
   const pregunta= await service.createDB(body);
 
   res.json({
@@ -56,6 +58,27 @@ router.post('/', validatorHandler(createPreguntaDto, 'body'), async (req, res) =
       next(error);
     }
     });
+
+
+
+    //BUSCAR POR TEXTO
+  router.get('/text', async (req, res, next) => {
+    try {
+      const { size } = req.query;
+      const filter = req.body;
+     // const busq = ("{texto: {$regex: /^"+ filter+ "/}}")
+      const pregunta = await service.findTextDB(size || 10, filter);
+
+      res.json({
+         'success': true,
+         'message': "Estas son las preguntas encontradas por la busqueda",
+         'Data': pregunta,
+     });
+    } catch (error) {
+      next(error);
+    }
+    });
+
 
 
     /*
