@@ -10,7 +10,6 @@ const createPreguntaDto = Joi.object({
     texto: texto.required(),
     descripcion: descripcion.required(),
     usuario: usuario.required(),
-    daysAgo: daysAgo.required(),
 });
 
 
