@@ -28,15 +28,22 @@ try {
 
 
 //CREAR
-router.post('/', validatorHandler(createRespuestaDto, 'body'), async (req, res) => {
+router.post('/', validatorHandler(createRespuestaDto, 'body'), async (req, res, next) => {
   const body = req.body;
   const respuesta= await service.createDB(body);
+
+
+  const { size } = req.query;
+  const filter = req.body;
+  const respuestas = await service.findResponseDB(size || 10, filter);
 
   res.json({
      'success': true,
      'message': "La respuesta se ha creado con exito",
-     'Data': respuesta
+     'Data': respuestas
  });
+
+
 });
 
 
