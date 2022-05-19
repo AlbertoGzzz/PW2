@@ -82,10 +82,10 @@ class PreguntaService
 
      // var query = {texto: {$regex: +'/'+filter+'/'}}
 
-      var query ={texto: new RegExp('^' +filter + '$', 'i')}
-      let preguntasDB = await PreguntaModel.find({texto: {$regex: /Que/}});
+      //var query =({"texto": new RegExp(filter)}).stream();
+      // let preguntasDB = await PreguntaModel.find({texto: {$regex: /Que/}});
 
-
+       let preguntasDB = await PreguntaModel.find({texto: filter.texto});
      // {texto: {$regex: /filter/}}
 
       preguntasDB = limit ? preguntasDB.filter(( item, index) => item && index < limit) : preguntasDB;
