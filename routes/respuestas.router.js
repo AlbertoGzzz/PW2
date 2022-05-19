@@ -79,6 +79,23 @@ router.get('/', async (req, res, next) => {
   });
 
 
+  router.post('/preg', async (req, res, next) => {
+    try {
+      const { size } = req.query;
+      const filter = req.body;
+      const respuesta = await service.findResponseDB(size || 10, filter);
+
+      res.json({
+         'success': true,
+         'message': "Estas son las respuestas de la pregunta",
+         'Data': respuesta
+     });
+    } catch (error) {
+      next(error);
+    }
+    });
+
+
 
 router.delete('/:id',validatorHandler(getRespuestaDto, 'params'), async (req, res, next) => {
   try {
