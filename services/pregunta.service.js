@@ -85,7 +85,7 @@ class PreguntaService
       //var query =({"texto": new RegExp(filter)}).stream();
       // let preguntasDB = await PreguntaModel.find({texto: {$regex: /Que/}});
 
-       let preguntasDB = await PreguntaModel.find({texto: {$regex: `.*${filter.texto}.*`}});
+       let preguntasDB = await PreguntaModel.find({texto: {$regex: `.*${filter.texto}.*`}}).sort({$natural:-1});
      // {texto: {$regex: /filter/}}
 
 
