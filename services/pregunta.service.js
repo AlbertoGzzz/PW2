@@ -42,7 +42,7 @@ class PreguntaService
     //DBS
 
     async findDB(limit, filter){
-      let preguntasDB = await PreguntaModel.find(filter);
+      let preguntasDB = await PreguntaModel.find(filter).sort({$natural:-1});
       preguntasDB = limit ? preguntasDB.filter(( item, index) => item && index < limit) : preguntasDB;
       if(!preguntasDB){
         throw boom.notFound(NOTFOUNDCATALOG);
