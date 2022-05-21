@@ -79,7 +79,22 @@ router.post('/', validatorHandler(createPreguntaDto, 'body'), async (req, res) =
     }
     });
 
+    router.post('/text', async (req, res, next) => {
+      try {
+        const { size } = req.query;
+        const filter = req.body;
+       // const busq = ("{texto: {$regex: /^"+ filter+ "/}}")
+        const pregunta = await service.findTextDB(size || 10, filter);
 
+        res.json({
+           'success': true,
+           'message': "Estas son las preguntas encontradas por la busqueda",
+           'Data': pregunta,
+       });
+      } catch (error) {
+        next(error);
+      }
+      });
 
     /*
 
